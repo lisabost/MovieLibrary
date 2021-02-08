@@ -41,7 +41,7 @@ namespace MovieLibrary
                 
                 while (!parser.EndOfData){
                     arr = parser.ReadFields();
-                    Console.WriteLine("Movie ID: {0}, Movie Title: {1}, Genre(s): {2}", arr[0], arr[1], arr[2]);
+                    Console.WriteLine("Movie ID: {0}, Movie Title: {1}, Genre(s): {2}", arr[0], arr[1], arr[2].Replace("|", ", "));
                 }
                 
             }
