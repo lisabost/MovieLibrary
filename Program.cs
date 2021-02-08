@@ -23,14 +23,45 @@ namespace MovieLibrary
 
             if (resp == "1")
             {
-                //TODO: Implement adding movies to the file
-                //TODO: Implement checking for existing movie in the file
+                //make a new movie object
+                Movie movie = new Movie();
+
+                //get the movie's title
+                Console.WriteLine("Enter the movie's title.");
+                string title = Console.ReadLine();
+                //set our title
+                movie.title = title;
+
+                //TODO: Handle when titles have "," in them
+                //TODO: Make sure movie title is unique
+
+                string input;
+                do
+                {
+                    Console.WriteLine("Enter the movie's genre (enter done to finish)");
+                    input = Console.ReadLine();
+                    if (input != "done" && input.Length > 0)
+                    {
+                        //add genre to our movie only if the user entered a valid string
+                        movie.genre.Add(input);
+                    }
+                } while (input != "done");
+
+                //if there is no genre
+                if (movie.genre.Count == 0)
+                {
+                    movie.genre.Add("(no genres listed");
+                }
+                
+                //TODO: Add movie to file
+
+
             }
             else if (resp == "2")
             {
                 //path to the CSV file
                 string movieFile = "C:/Users/Corey/DotNetDBProjects/MovieLibrary/ml-latest-small/movies.csv";
-                
+
                 //read lines in the file
                 TextFieldParser parser = new TextFieldParser(movieFile);
 
@@ -38,12 +69,13 @@ namespace MovieLibrary
                 parser.SetDelimiters(",");
 
                 string[] arr;
-                
-                while (!parser.EndOfData){
+
+                while (!parser.EndOfData)
+                {
                     arr = parser.ReadFields();
                     Console.WriteLine("Movie ID: {0}, Movie Title: {1}, Genre(s): {2}", arr[0], arr[1], arr[2].Replace("|", ", "));
                 }
-                
+
             }
             logger.Info("Program ended");
 
