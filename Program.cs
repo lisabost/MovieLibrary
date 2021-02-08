@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using Microsoft.VisualBasic.FileIO;
 using NLog.Web;
 
 namespace MovieLibrary
@@ -14,8 +15,8 @@ namespace MovieLibrary
 
             logger.Info("Program started");
 
-            Console.WriteLine("Enter 1 to add a movie.");
-            Console.WriteLine("Enter 2 to read movies in the file.");
+            Console.WriteLine("1. Add a Movie.");
+            Console.WriteLine("2 Display Movies.");
             Console.WriteLine("Enter anything else to quit.");
 
             string resp = Console.ReadLine();
@@ -29,13 +30,17 @@ namespace MovieLibrary
             {
                 //path to the CSV file
                 string movieFile = "C:/Users/Corey/DotNetDBProjects/MovieLibrary/ml-latest-small/movies.csv";
+                
                 //read lines in the file
-                StreamReader sr = new StreamReader(movieFile);
+                TextFieldParser parser = new TextFieldParser(movieFile);
 
-                while (!sr.EndOfStream) {
-                    string line = sr.ReadLine();
+                parser.HasFieldsEnclosedInQuotes = true;
+                parser.SetDelimiters(",");
 
-                    string[] arr = line.Split(",");
+                string[] arr;
+                
+                while (!parser.EndOfData){
+                    arr = parser.ReadFields();
                     Console.WriteLine("Movie ID: {0}, Movie Title: {1}, Genre(s): {2}", arr[0], arr[1], arr[2]);
                 }
                 
