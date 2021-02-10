@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Collections.Generic;
 using Microsoft.VisualBasic.FileIO;
 using NLog.Web;
 
@@ -16,7 +17,7 @@ namespace MovieLibrary
             logger.Info("Program started");
 
             Console.WriteLine("1. Add a Movie.");
-            Console.WriteLine("2 Display Movies.");
+            Console.WriteLine("2. Display Movies.");
             Console.WriteLine("Enter anything else to quit.");
 
             string resp = Console.ReadLine();
@@ -31,9 +32,6 @@ namespace MovieLibrary
                 string title = Console.ReadLine();
                 //set our title
                 movie.title = title;
-
-                //TODO: Handle when titles have "," in them
-                //TODO: Make sure movie title is unique
 
                 string input;
                 do
@@ -52,7 +50,7 @@ namespace MovieLibrary
                 {
                     movie.genre.Add("(no genres listed");
                 }
-                
+
                 //TODO: Add movie to file
 
 
@@ -62,18 +60,18 @@ namespace MovieLibrary
                 //path to the CSV file
                 string movieFile = "C:/Users/Corey/DotNetDBProjects/MovieLibrary/ml-latest-small/movies.csv";
 
-                //read lines in the file
-                TextFieldParser parser = new TextFieldParser(movieFile);
+                //make a file reader object and have it parse the file
+                FileReader fr = new FileReader(movieFile);
+                fr.parseFile();
 
-                parser.HasFieldsEnclosedInQuotes = true;
-                parser.SetDelimiters(",");
+                //get our values in three parallel array lists
+                List<string> movieID = fr.getIDs();
+                List<string> movieTitles = fr.getTitles();
+                List<string> genres = fr.getGenres();
 
-                string[] arr;
-
-                while (!parser.EndOfData)
+                for (var i = 0; i < movieID.Count; i++)
                 {
-                    arr = parser.ReadFields();
-                    Console.WriteLine("Movie ID: {0}, Movie Title: {1}, Genre(s): {2}", arr[0], arr[1], arr[2].Replace("|", ", "));
+                    Console.WriteLine($"Movie ID: {movieID[i]}, Movie Title: {movieTitles[i]}, Genres: {genres[i]}");
                 }
 
             }

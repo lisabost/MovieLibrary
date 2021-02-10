@@ -28,9 +28,5 @@ namespace MovieLibrary
                 this.title = title.IndexOf(",") != -1 ? $"\"{title}\"" : title;
             }
         }
-
-        //check to see if the movie title is unique
-        public isTitleUnique 
-
     }
 }
