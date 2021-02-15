@@ -8,11 +8,21 @@ namespace MovieLibrary
 {
     class Program
     {
+        private static NLog.Logger logger = NLog.Web.NLogBuilder.ConfigureNLog(Directory.GetCurrentDirectory() + "\\nlog.config").GetCurrentClassLogger();
+        //path to the CSV file
+        private static string movieFile = "C:/Users/Corey/DotNetDBProjects/MovieLibrary/ml-latest-small/movies.csv";
+
         static void Main(string[] args)
         {
-            // create instance of Logger
-            string path = Directory.GetCurrentDirectory() + "\\nlog.config";
-            var logger = NLog.Web.NLogBuilder.ConfigureNLog(path).GetCurrentClassLogger();
+            string movieFile = "C:/Users/Corey/DotNetDBProjects/MovieLibrary/ml-latest-small/movies.csv";
+            FileReader fr = new FileReader(movieFile);
+
+            fr.parseFile();
+
+            //get our values in three parallel array lists
+            List<string> movieID = fr.getIDs();
+            List<string> movieTitles = fr.getTitles();
+            List<string> genres = fr.getGenres();
 
             logger.Info("Program started");
 
@@ -57,18 +67,6 @@ namespace MovieLibrary
             }
             else if (resp == "2")
             {
-                //path to the CSV file
-                string movieFile = "C:/Users/Corey/DotNetDBProjects/MovieLibrary/ml-latest-small/movies.csv";
-
-                //make a file reader object and have it parse the file
-                FileReader fr = new FileReader(movieFile);
-                fr.parseFile();
-
-                //get our values in three parallel array lists
-                List<string> movieID = fr.getIDs();
-                List<string> movieTitles = fr.getTitles();
-                List<string> genres = fr.getGenres();
-
                 for (var i = 0; i < movieID.Count; i++)
                 {
                     Console.WriteLine($"Movie ID: {movieID[i]}, Movie Title: {movieTitles[i]}, Genres: {genres[i]}");

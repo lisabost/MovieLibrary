@@ -8,6 +8,7 @@ namespace MovieLibrary
 {
     class FileReader
     {
+        private static NLog.Logger logger = NLog.Web.NLogBuilder.ConfigureNLog(Directory.GetCurrentDirectory() + "\\nlog.config").GetCurrentClassLogger();
         //fields
         private string _filePath;
 
@@ -34,13 +35,19 @@ namespace MovieLibrary
             parser.SetDelimiters(",");
 
             string[] arr;
-
-            while (!parser.EndOfData)
+            try
             {
-                arr = parser.ReadFields();
-                movieIDs.Add(arr[0]);
-                movieTitles.Add(arr[1]);
-                genres.Add(arr[2]);
+                while (!parser.EndOfData)
+                {
+                    arr = parser.ReadFields();
+                    movieIDs.Add(arr[0]);
+                    movieTitles.Add(arr[1]);
+                    genres.Add(arr[2]);
+                }
+            }
+            catch
+            {
+                logger.Info("No file found");
             }
         }
 
