@@ -35,7 +35,7 @@ namespace MovieLibrary
             if (resp == "1")
             {
                 //make a new movie object
-                Movie movie = new Movie();
+                Movie movie = new Movie(movieTitles, movieID);
 
                 //get the movie's title
                 Console.WriteLine("Enter the movie's title.");
@@ -51,14 +51,14 @@ namespace MovieLibrary
                     if (input != "done" && input.Length > 0)
                     {
                         //add genre to our movie only if the user entered a valid string
-                        movie.genre.Add(input);
+                        movie.genres.Add(input);
                     }
                 } while (input != "done");
 
                 //if there is no genre
-                if (movie.genre.Count == 0)
+                if (movie.genres.Count == 0)
                 {
-                    movie.genre.Add("(no genres listed");
+                    movie.genres.Add("(no genre listed)");
                 }
 
                 //TODO: Add movie to file

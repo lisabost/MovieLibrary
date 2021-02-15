@@ -9,10 +9,16 @@ namespace MovieLibrary
 
     class Movie
     {
-        public List<string> genre { get; set; }
+        public List<string> genres { get; set; }
+        public List<string> movieTitles;
+        public List<string> movieIds;
 
         //constructor for our movie object
-        public Movie(){ }
+        public Movie(List<string> titles, List<string> movieID)
+        { 
+            this.movieTitles = titles;
+            this.movieIds = movieID;
+        }
 
         //when we set the title check to see if there is a comma in the movie title
         //if there is wrap the title in quotes
@@ -29,17 +35,5 @@ namespace MovieLibrary
                 this.title = title.IndexOf(",") != -1 ? $"\"{title}\"" : title;
             }
         }
-        // public string movieID
-        // {
-        //     get
-        //     {
-        //         return this.movieID;
-        //     }
-        //     set
-        //     {
-        //         //find the largest number used as a movie ID and add 1 to it
-                
-        //     }
-        // }
     }
 }
