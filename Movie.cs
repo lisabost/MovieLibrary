@@ -15,7 +15,7 @@ namespace MovieLibrary
 
         //constructor for our movie object
         public Movie(List<string> titles, List<string> movieID)
-        { 
+        {
             this.movieTitles = titles;
             this.movieIds = movieID;
         }
@@ -26,14 +26,24 @@ namespace MovieLibrary
         {
             get
             {
-                    return this.title;
+                return this.title;
             }
             set
             {
                 //if the index of the comma = -1 there is no comma in the string
                 //so we can set the title of our movie to the string entered
-                this.title = title.IndexOf(",") != -1 ? $"\"{title}\"" : title;
+                string movieTitle = title.IndexOf(",") != -1 ? $"\"{title}\"" : title;
+                //check to see if the movie title is unique
+                if (movieTitles.Contains(movieTitle))
+                {
+                    Console.WriteLine("This title is already in the list.");
+                }
+                else
+                {
+                    this.title = movieTitle;
+                }
             }
+
         }
     }
 }
