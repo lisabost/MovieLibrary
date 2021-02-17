@@ -10,7 +10,9 @@ namespace MovieLibrary
     class Movie
     {
         public List<string> genres { get; set; }
-        public UInt64 movieID { get; set;}
+        //we use ulong because in framework 3.1 it has a Max method to find the maximum value easily
+        //later frameworks let you use Max() with Int as well
+        public UInt64 movieID { get; set; }
         string _title;
 
         //constructor for our movie object
@@ -34,6 +36,7 @@ namespace MovieLibrary
                 this._title = value.IndexOf(",") != -1 ? $"\"{value}\"" : value;
             }
         }
+        //check to see if the entered title is unique
         public bool isTitleUnique(string title, List<string> titles)
         {
             if (titles.ConvertAll(m => m.ToLower()).Contains(title))
