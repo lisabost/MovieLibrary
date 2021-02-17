@@ -16,6 +16,7 @@ namespace MovieLibrary
         public List<Int32> movieIDs;
         public List<string> movieTitles;
         public List<string> genres;
+        public List<string> header;
 
         //constructor
         public FileReader(string filePath)
@@ -36,7 +37,7 @@ namespace MovieLibrary
             parser.SetDelimiters(",");
 
             string[] arr;
-            List<string> header = new List<string>();
+            header = new List<string>();
             bool isFirst = true;
             try
             {
@@ -96,6 +97,11 @@ namespace MovieLibrary
         public List<string> getGenres()
         {
             return genres;
+        }
+        
+        public List<string> getHeader()
+        {
+            return header;
         }
     }
 }
