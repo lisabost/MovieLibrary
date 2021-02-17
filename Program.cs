@@ -60,18 +60,14 @@ namespace MovieLibrary
                     {
                         movie.genres.Add("(no genres listed)");
                     }
+                    //Add movie to file
+                    fr.addMovie(movie);
                 }
-
-
-                //Add movie to file
-                fr.addMovie(movie);
-
-
             }
             else if (resp == "2")
             {
                 Console.WriteLine($"{header[0]},{header[1]}, {header[2]}");
-                
+
                 for (var i = 0; i < movieID.Count; i++)
                 {
                     Console.WriteLine($"Movie ID: {movieID[i]}, Movie Title: {movieTitles[i]}, Genres: {genres[i]}");
