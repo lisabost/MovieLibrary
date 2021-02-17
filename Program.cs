@@ -20,9 +20,10 @@ namespace MovieLibrary
             fr.parseFile();
 
             //get our values in three parallel array lists
-            List<Int32> movieID = fr.getIDs();
+            List<UInt64> movieID = fr.getIDs();
             List<string> movieTitles = fr.getTitles();
             List<string> genres = fr.getGenres();
+            List<string> header = fr.getHeader();
 
             logger.Info("Program started");
 
@@ -47,14 +48,14 @@ namespace MovieLibrary
 
                     do
                     {
-                        Console.WriteLine("Enter genre (or F to quit)");
+                        Console.WriteLine("Enter genre (or done to quit)");
                         input = Console.ReadLine();
 
-                        if (input != "F" || input.Length > 0)
+                        if (input != "done" && input.Length > 0)
                         {
                             movie.genres.Add(input);
                         }
-                    } while (input != "F");
+                    } while (input != "done");
                     if (movie.genres.Count == 0)
                     {
                         movie.genres.Add("(no genres listed)");
@@ -69,6 +70,8 @@ namespace MovieLibrary
             }
             else if (resp == "2")
             {
+                Console.WriteLine($"{header[0]},{header[1]}, {header[2]}");
+                
                 for (var i = 0; i < movieID.Count; i++)
                 {
                     Console.WriteLine($"Movie ID: {movieID[i]}, Movie Title: {movieTitles[i]}, Genres: {genres[i]}");

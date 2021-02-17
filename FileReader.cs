@@ -13,7 +13,7 @@ namespace MovieLibrary
         //fields
         private string _filePath;
 
-        public List<Int32> movieIDs;
+        public List<UInt64> movieIDs;
         public List<string> movieTitles;
         public List<string> genres;
         public List<string> header;
@@ -22,7 +22,7 @@ namespace MovieLibrary
         public FileReader(string filePath)
         {
             this._filePath = filePath;
-            movieIDs = new List<Int32>();
+            movieIDs = new List<UInt64>();
             movieTitles = new List<string>();
             genres = new List<string>();
 
@@ -52,7 +52,7 @@ namespace MovieLibrary
                         isFirst = false;
                     }
                     arr = parser.ReadFields();
-                    movieIDs.Add(Int32.Parse(arr[0]));
+                    movieIDs.Add(UInt64.Parse(arr[0]));
                     movieTitles.Add(arr[1]);
                     genres.Add(arr[2]);
                 }
@@ -77,14 +77,14 @@ namespace MovieLibrary
         public void addMovie(Movie movie) 
         {
             //TODO figure out how to find max value of list<string> movieIDs
-            //movie.movieID = movieIDs.Max() + 1;
+            movie.movieID = movieIDs.Max() + 1;
             StreamWriter sw = new StreamWriter(_filePath, true);
             sw.WriteLine($"{movie.movieID}, {movie.title}, {string.Join("|", movie.genres)}");
             sw.Close();
         }
 
         //make the values public
-        public List<Int32> getIDs()
+        public List<UInt64> getIDs()
         {
             return movieIDs;
         }
