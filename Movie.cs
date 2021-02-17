@@ -10,14 +10,13 @@ namespace MovieLibrary
     class Movie
     {
         public List<string> genres { get; set; }
-        public List<string> movieTitles;
-        public List<string> movieIds;
+        public UInt64 movieID { get; set;}
+        string _title;
 
         //constructor for our movie object
-        public Movie(List<string> titles, List<string> movieID)
+        public Movie()
         {
-            this.movieTitles = titles;
-            this.movieIds = movieID;
+            genres = new List<string>();
         }
 
         //when we set the title check to see if there is a comma in the movie title
@@ -26,24 +25,22 @@ namespace MovieLibrary
         {
             get
             {
-                return this.title;
+                return this._title;
             }
             set
             {
                 //if the index of the comma = -1 there is no comma in the string
                 //so we can set the title of our movie to the string entered
-                string movieTitle = title.IndexOf(",") != -1 ? $"\"{title}\"" : title;
-                //check to see if the movie title is unique
-                if (movieTitles.Contains(movieTitle))
-                {
-                    Console.WriteLine("This title is already in the list.");
-                }
-                else
-                {
-                    this.title = movieTitle;
-                }
+                this._title = value.IndexOf(",") != -1 ? $"\"{value}\"" : value;
             }
-
+        }
+        public bool isTitleUnique(string title, List<string> titles)
+        {
+            if (titles.ConvertAll(m => m.ToLower()).Contains(title))
+            {
+                return false;
+            }
+            return true;
         }
     }
 }

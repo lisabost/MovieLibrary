@@ -10,17 +10,17 @@ namespace MovieLibrary
     {
         private static NLog.Logger logger = NLog.Web.NLogBuilder.ConfigureNLog(Directory.GetCurrentDirectory() + "\\nlog.config").GetCurrentClassLogger();
         //path to the CSV file
-        private static string movieFile = "C:/Users/Corey/DotNetDBProjects/MovieLibrary/ml-latest-small/movies.csv";
 
         static void Main(string[] args)
         {
-            string movieFile = "C:/Users/Corey/DotNetDBProjects/MovieLibrary/ml-latest-small/movies.csv";
+            string movieFile = "C:/Users/Corey/DotNetDBProjects/MovieLibrary/movies.csv";
+
             FileReader fr = new FileReader(movieFile);
 
             fr.parseFile();
 
             //get our values in three parallel array lists
-            List<string> movieID = fr.getIDs();
+            List<Int32> movieID = fr.getIDs();
             List<string> movieTitles = fr.getTitles();
             List<string> genres = fr.getGenres();
 
@@ -34,34 +34,36 @@ namespace MovieLibrary
 
             if (resp == "1")
             {
-                //make a new movie object
-                Movie movie = new Movie(movieTitles, movieID);
+                Movie movie = new Movie();
 
                 //get the movie's title
                 Console.WriteLine("Enter the movie's title.");
-                string title = Console.ReadLine();
-                //set our title
-                movie.title = title;
+                movie.title = Console.ReadLine();
 
-                string input;
-                do
+                if (fr.isTitleUnique(movie.title))
                 {
-                    Console.WriteLine("Enter the movie's genre (enter done to finish)");
-                    input = Console.ReadLine();
-                    if (input != "done" && input.Length > 0)
+                    //get genres from user
+                    string input;
+
+                    do
                     {
-                        //add genre to our movie only if the user entered a valid string
-                        movie.genres.Add(input);
-                    }
-                } while (input != "done");
+                        Console.WriteLine("Enter genre (or F to quit)");
+                        input = Console.ReadLine();
 
-                //if there is no genre
-                if (movie.genres.Count == 0)
-                {
-                    movie.genres.Add("(no genre listed)");
+                        if (input != "F" || input.Length > 0)
+                        {
+                            movie.genres.Add(input);
+                        }
+                    } while (input != "F");
+                    if (movie.genres.Count == 0)
+                    {
+                        movie.genres.Add("(no genres listed)");
+                    }
                 }
 
-                //TODO: Add movie to file
+
+                //Add movie to file
+                fr.addMovie(movie);
 
 
             }
